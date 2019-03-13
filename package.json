@@ -1,0 +1,23 @@
+{
+    "name": "TwitchBot",
+    "version": "1.0.0",
+    "description": "Chat bot for twitch",
+    "main": "bot.core.js",
+    "scripts": {
+        "build": "tsc",
+        "start": "node bin/bot.core.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/HiueHie/Dark_Avaire.git"
+    },
+    "author": "HiueHie aka Darky_Chan",
+    "license": "ISC",
+    "dependencies": {
+        "tmi.js": "^1.4.2"
+    },
+    "devDependencies": {
+        "@types/node": "^11.11.3",
+        "typescript": "^3.3.3333"
+    }
+}

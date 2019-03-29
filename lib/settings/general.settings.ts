@@ -1,22 +1,11 @@
 export class GeneralSettings {
     // Info
-    private _currentChannel: string;
     private _clientId: string;
     private _unCommandsLocked: boolean;
 
     constructor() {
-        this._currentChannel = "CHANNEL_NAME";
         this._clientId = "k5qcgssj9ck3xnronc0brarej112g3";
         this._unCommandsLocked = true;
-    }
-
-    /**
-     * @description Get the current channel of the streamer
-     * 
-     * @returns string
-     */
-    public get currentChannel(): string {
-        return this._currentChannel;
     }
 
     /**

@@ -6,7 +6,7 @@ export class Tmi {
     private _client: any;
     private _optiions: any;
 
-    constructor() {
+    constructor(UserConfig: any) {
         this.settings = new GeneralSettings();
         this._optiions = {
             options: {
@@ -20,7 +20,7 @@ export class Tmi {
                 username: "Dark_Avaire",
                 password: "oauth:p8c1nc2ad7gdixp816a2j5f18wvjni"
             },
-            channels: [this.settings.currentChannel]
+            channels: [UserConfig.channel_name]
         };
 
         this._client = new client(this._optiions);

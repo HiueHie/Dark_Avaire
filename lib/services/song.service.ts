@@ -1,15 +1,16 @@
 import { SongRequestObject } from '../../lib/models/songRequestObject';
 import { Userstate } from '../../lib/models/userstate';
+import { SentenceService } from './sentence.service';
 
 export class SongService {
     private _songList: SongRequestObject[];
     private _prioSub: boolean;
-    private _userConfig: any;
+    private _sentencesService: SentenceService;
 
-    constructor(uc: any) {
+    constructor(sentences: SentenceService) {
         this._songList = [];
         this._prioSub = false;
-        this._userConfig = uc;
+        this._sentencesService = sentences;
     }
 
     /**
@@ -24,12 +25,12 @@ export class SongService {
      */
     public addSong(user: Userstate, message: string): string {
         if (this._songList.find((s: SongRequestObject): boolean => s.username == user.username)) {
-            return user.username + ", you can only request one song at a time! Cool down!";
+            return this._sentencesService.getSentence("song", "queue_add", "only_one_song", {username: user.username});
         } 
         
         let messages = message.split("!queue add ");
         if (messages[1] == null) {
-            return user.username + ", you wanna request nothing? DansGame";
+            return this._sentencesService.getSentence("song", "queue_add", "nothing", {username: user.username});
         }
 
         let song: SongRequestObject = new SongRequestObject(user.username, messages[1], user.subscriber);
@@ -45,8 +46,8 @@ export class SongService {
         }
 
         this._setSongListIds();
-
-        return user.username + " just requested \""+messages[1]+"\" and is added to the request queue #"+song.id;
+        return this._sentencesService.getSentence("song", "queue_add", "success", 
+                {username: user.username, songname: messages[1], id: song.id});
     }
 
     /**
@@ -58,10 +59,14 @@ export class SongService {
      */
     public getSongList(): string {
         if (this._songList.length == 0) {
-            return "No requests currently in queue";
+            return this._sentencesService.getSentence("song", "queue_get", "no_songs");
         }
 
-        return "Current queue is: " + this._songList.map((s) => "#"+s.id+" "+s.username+" \""+s.songTitle+"\"").join(", ");
+        let songlist = this._songList.map(s => this._sentencesService.getSentence("song", "queue_get", "song_list_look", 
+                {id: s.id, username: s.username, songtitle: s.songTitle})).join(", ");
+
+        return this._sentencesService.getSentence("song", "queue_get", "success", 
+                {songlist: this._sentencesService.getSentence("song", "queue_get", "song_list_look", {songlist})});
     }
 
     /**
@@ -74,21 +79,24 @@ export class SongService {
     public removeSong(id: any): string {
         if (id === "all") {
             this._songList = [];
-            return "Request queue is empty now!";
+            return this._sentencesService.getSentence("song", "queue_remove", "all");
         }
         if (this._songList.length == 0) {
-            return "No requests are in queue, can't delete "+id;
+            return this._sentencesService.getSentence("song", "queue_remove", "no_songs", {id});
         }
         if (this._songList.length > id || id < 0) {
-            return "No song in this position!";
+            return this._sentencesService.getSentence("song", "queue_remove", "invalide");
         }
 
-        id = id == null || id == "" ? 1 : id;
-        let song = this._songList.find(s => s.id == id);
+        let song = this._songList.find(s => s.id == (id == null || id == "" ? 1 : id));
         this._songList.splice(id, 1);
         this._setSongListIds();
-        return song.username + "'s song request \""+song.songTitle+"\" deleted." 
-            + this._userConfig.song.nextSong ? " Next song is \""+this._songList[0].songTitle+"\" from \""+this._songList[0].username+"\"" : "";
+        return id == null || id == ""
+            ? this._sentencesService.getSentence("song", "queue_remove", "success_granted", 
+                {username: song.username, songtitle: song.songTitle, 
+                nextsongtitle: this._songList[0].songTitle, nextsongusername: this._songList[0].username})
+            : this._sentencesService.getSentence("song", "queue_remove", "success_remove", 
+                {username: song.username, songtitle: song.songTitle});
     }
 
     /**

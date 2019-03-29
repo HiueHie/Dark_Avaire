@@ -1,0 +1,38 @@
+{
+    "song": {
+        "queue_add": {
+            "only_one_song": "$username$, you can only request one song at a time! Cool down!",
+            "nothing": "$username$, you wanna request nothing? DansGame",
+            "success": "$username$ just requested $songname$ and is added to the request queue #$id$"
+        },
+        "queue_get": {
+            "no_songs": "No requests currently in queue",
+            "success": "Current queue is: $songlist$",
+            "song_list_look": "#$id$ $username$ \"$songtitle$\""
+        },
+        "queue_remove": {
+            "all": "Request queue is empty now!",
+            "no_songs": "No requests are in queue, can't delete $id$",
+            "invalide": "No song at this position!",
+            "success_granted": "$username$'s song request \"$songtitle$\" granted. Next song is \"$nextsongtitle$\" from $nextsongusername$",
+            "success_remove": "$username$'s song request \"$songtitle$\" removed."
+        }
+    },
+    "raffle": {
+        "specialraffle": {
+            "start": "A special raffle for $pointsname$ has been launched!, Type !join. $time$ seconds left!",
+            "no_one_joined": "The special raffle has ended! No one joined the special raffle.",
+            "win": "The special raffle is over and $pointsname$ has been reward to $winuser$! $winuser$ got $points$ $pointsname$!"
+        }
+    },
+    "core": {
+        "connected": "Bot is online and is awaiting to get commands.",
+        "chat": {
+            "lockcommands": "Requests currently muted!",
+            "unlockcommands": "GivePLZ gimme requests.",
+            "priosub": "Subscribers are prioritized in queue now.",
+            "unpriosub": "Subscribers are no longer prioritized in queue now.",
+            "get_coins": "$username$, you have $points$ $pointsname$."
+        }
+    }
+}

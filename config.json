@@ -1,6 +1,12 @@
 {
     "channel_name": "CHANNEL_NAME",
-    "song": {
-        "next_song": true
+    "points_name": "coins",
+    "points_short": "coins",
+    "raffle": {
+        "rewards": {
+            "everyone": 1,
+            "normal_user": 2,
+            "sub_user": 4
+        }
     }
 }

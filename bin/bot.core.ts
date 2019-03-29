@@ -4,15 +4,17 @@ import { Tmi } from '../lib/settings/bot.settings';
 import { GlobalService } from '../lib/services/global.service';
 import { Userstate } from '../lib/models/userstate';
 import * as UserConfig from "../config.json"; 
+import { SentenceService } from "../lib/services/sentence.service";
 
-let raffle: RaffelService = new RaffelService();
-let song: SongService = new SongService(UserConfig);
+let sentences: SentenceService = new SentenceService();
+let raffle: RaffelService = new RaffelService(sentences, UserConfig);
+let song: SongService = new SongService(sentences);
 let tmi: Tmi = new Tmi(UserConfig);
 
 tmi.client.connect();
 
 tmi.client.on("connected", (address: string, port: number): void => {
-    tmi.client.action(UserConfig.channel_name, "Bot is online and is awaiting to get commands.");
+    tmi.client.action(UserConfig.channel_name, sentences.getSentence("core", "connected"));
 });
 
 tmi.client.on("join", (channel: string, username: string, self: boolean): void => {
@@ -89,19 +91,19 @@ tmi.client.on("chat", (channel: string, user: any, message: string, self: boolea
         }
 		if (messages[0] === "!lockcommands") {
 			tmi.settings.unCommandsLocked = false;
-			tmi.client.action(UserConfig.channel_name, "Requests currently muted!");
+			tmi.client.action(UserConfig.channel_name, sentences.getSentence("core", "chat", "lockcommands"));
 		}
 		if (messages[0] === "!unlockcommands") {
 			tmi.settings.unCommandsLocked = true;
-			tmi.client.action(UserConfig.channel_name, "GivePLZ gimme requests.");
+			tmi.client.action(UserConfig.channel_name, sentences.getSentence("core", "chat", "unlockcommands"));
         }
         if (messages[0] === "!priosub") {
             song.prioSub(true);
-            tmi.client.action(UserConfig.channel_name, "Subscribers are prioritized in queue now.");
+            tmi.client.action(UserConfig.channel_name, sentences.getSentence("core", "chat", "priosub"));
         }
         if (messages[0] === "!unpriosub") {
             song.prioSub(false);
-            tmi.client.action(UserConfig.channel_name, "Subscribers are no longer prioritized in queue now.");
+            tmi.client.action(UserConfig.channel_name, sentences.getSentence("core", "chat", "unpriosub"));
         }
     }
     if (tmi.settings.unCommandsLocked) {
@@ -112,8 +114,9 @@ tmi.client.on("chat", (channel: string, user: any, message: string, self: boolea
                 tmi.client.action(UserConfig.channel_name, song.addSong(userstate, message));
             }
         }
-        if (messages[0] === "!coins") {
-            tmi.client.action(UserConfig.channel_name, userstate.displayName+", you have "+raffle.getUserCoins(userstate.userId)+" coins.");
+        if (messages[0] === "!"+UserConfig.points_short) {
+            tmi.client.action(UserConfig.channel_name, sentences.getSentence("core", "chat", "get_coins", 
+                {username: userstate.displayName, points: raffle.getUserCoins(userstate.userId), pointsname: UserConfig.points_name}));
         }
         if (messages[0] === "!join") {
             raffle.addUserToRaffle(userstate);

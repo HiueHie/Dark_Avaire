@@ -2,6 +2,7 @@ import { Coin } from '../../lib/models/coins';
 import { Userstate } from '../../lib/models/userstate';
 import { FileService } from './file.service';
 import { client } from "../../node_modules/tmi.js";
+import { SentenceService } from './sentence.service';
 
 export class RaffelService {
     private _coins: Coin[];
@@ -9,13 +10,17 @@ export class RaffelService {
     private _users: Userstate[];
     private _pointsToAll: boolean;
     private _fielService: FileService;
+    private _sentenceService: SentenceService;
+    private _userConfig: any;
 
-    constructor() { 
+    constructor(sentence: SentenceService, config: any) { 
         this._started = false;
         this._users = [];
         this._pointsToAll = false;
         this._fielService = new FileService();
         this._coins = this._fielService.getFileContent();
+        this._sentenceService = sentence;
+        this._userConfig = config;
     }
 
     /**
@@ -102,7 +107,8 @@ export class RaffelService {
             }
         }, 1000 * t);
 
-        client.action(client.opts.channels[0], "A special raffle for coins has been launched!, Type !join. "+time+" seconds left!");
+        client.action(client.opts.channels[0], this._sentenceService.getSentence("raffle", "specialraffle", "start", 
+            {pointsname: this._userConfig.points_name, time}));
     }
 
     /**
@@ -113,20 +119,23 @@ export class RaffelService {
     private _raffleEnd(client: client): void {
         this._started = false;
         if (this._users.length == 0) {
-            client.action(client.opts.channels[0], "The special raffle has ended! No one joined the special raffle.");
+            client.action(client.opts.channels[0], this._sentenceService.getSentence("raffle", "specialraffle", "no_one_joined"));
             return;
         }
 
         let winUser: Userstate = this._users[Math.floor(Math.random() * this._users.length)];
+        let rewards = this._userConfig.raffle.rewards;
+        let points = winUser.subscriber ? rewards.sub_user : rewards.normal_user;
+        
         if (this._pointsToAll) {
-            this._users.forEach(u => this._increaseUserPoints(u.userId, u.username, 1));
-            this._increaseUserPoints(winUser.userId, winUser.username, (winUser.subscriber ? 2 : 1));
+            this._users.forEach(u => this._increaseUserPoints(u.userId, u.username, rewards.everyone));
+            this._increaseUserPoints(winUser.userId, winUser.username, points - rewards.everyone);
         } else {
-            this._increaseUserPoints(winUser.userId, winUser.username, (winUser.subscriber ? 3 : 2));
+            this._increaseUserPoints(winUser.userId, winUser.username, points);
         }
 
-        client.action(client.opts.channels[0], "The special raffle is over and coins has been reward to "+winUser.displayName+"! "
-                                                +winUser.displayName+" got "+(winUser.subscriber?"3":"2")+" coins!");
+        client.action(client.opts.channels[0], this._sentenceService.getSentence("raffle", "specialraffle", "win", 
+            {pointsname: this._userConfig.points_name, winuser: winUser.displayName, points}))
         this._users = [];
     }
 }

@@ -6,7 +6,7 @@ import { Userstate } from '../lib/models/userstate';
 import * as UserConfig from "../config.json"; 
 
 let raffle: RaffelService = new RaffelService();
-let song: SongService = new SongService();
+let song: SongService = new SongService(UserConfig);
 let tmi: Tmi = new Tmi(UserConfig);
 
 tmi.client.connect();

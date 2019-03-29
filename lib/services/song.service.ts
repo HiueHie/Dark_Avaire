@@ -4,10 +4,12 @@ import { Userstate } from '../../lib/models/userstate';
 export class SongService {
     private _songList: SongRequestObject[];
     private _prioSub: boolean;
+    private _userConfig: any;
 
-    constructor() {
+    constructor(uc: any) {
         this._songList = [];
         this._prioSub = false;
+        this._userConfig = uc;
     }
 
     /**
@@ -74,20 +76,19 @@ export class SongService {
             this._songList = [];
             return "Request queue is empty now!";
         }
-        if (id == null) {
-            return "Please remove an id or all!";
-        }
         if (this._songList.length == 0) {
             return "No requests are in queue, can't delete "+id;
         }
-        if (this._songList.length > id) {
+        if (this._songList.length > id || id < 0) {
             return "No song in this position!";
         }
 
+        id = id == null || id == "" ? 1 : id;
         let song = this._songList.find(s => s.id == id);
         this._songList.splice(id, 1);
         this._setSongListIds();
-        return song.username + "'s song request \""+song.songTitle+"\" deleted."
+        return song.username + "'s song request \""+song.songTitle+"\" deleted." 
+            + this._userConfig.song.nextSong ? " Next song is \""+this._songList[0].songTitle+"\" from \""+this._songList[0].username+"\"" : "";
     }
 
     /**

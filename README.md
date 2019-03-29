@@ -1,6 +1,5 @@
 # Dark_Avaire
 
-=============================
 
 ## Description
 

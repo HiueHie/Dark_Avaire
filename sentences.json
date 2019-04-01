@@ -8,14 +8,14 @@
         "queue_get": {
             "no_songs": "No requests currently in queue",
             "success": "Current queue is: $songlist$",
-            "song_list_look": "#$songid$ $username$ \"$songtitle$\""
+            "song_list_look": "#$songid$ $songusername$ \"$songtitle$\""
         },
         "queue_remove": {
             "all": "Request queue is empty now!",
             "no_songs": "No requests are in queue, can't delete $songid$",
             "invalide": "No song at this position!",
-            "success_granted": "$username$'s song request \"$songtitle$\" granted. Next song is \"$nextsongtitle$\" from $nextsongusername$",
-            "success_remove": "$username$'s song request \"$songtitle$\" removed."
+            "success_granted": "$songusername$'s song request \"$songtitle$\" granted. Next song is \"$nextsongtitle$\" from $nextsongusername$",
+            "success_remove": "$songusername$'s song request \"$songtitle$\" removed."
         }
     },
     "raffle": {

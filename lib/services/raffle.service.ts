@@ -3,6 +3,7 @@ import { Userstate } from '../../lib/models/userstate';
 import { FileService } from './file.service';
 import { client } from "../../node_modules/tmi.js";
 import { SentenceService } from './sentence.service';
+import { Raffle } from '../models/placeHolderData';
 
 export class RaffelService {
     private _coins: Coin[];
@@ -78,10 +79,10 @@ export class RaffelService {
      * 
      * @param {client} client 
      */
-    public specialRaffle(client: client): void {
+    public specialRaffle(client: client, user: Userstate): void {
         this._started = true;
         this._users = [];
-        this._timeouts(client, 30);
+        this._timeouts(client, 30, user);
     }
 
     /**
@@ -90,7 +91,8 @@ export class RaffelService {
      * @param {client} client 
      * @param {number} time 
      */
-    private _timeouts(client: client, time: number): void {
+    private _timeouts(client: client, time: number, user: Userstate): void {
+        this._sentenceService.setDataWithRaffle(user, new Raffle(time));
         let t: number = time;
         if (t == 8) {
             t = 7;
@@ -101,14 +103,13 @@ export class RaffelService {
         let timeout = setTimeout(() => {
             clearTimeout(timeout);
             if (t == 7) {
-                this._raffleEnd(client);
+                this._raffleEnd(client, user);
             } else {
-                this._timeouts(client, t);
+                this._timeouts(client, t, user);
             }
         }, 1000 * t);
 
-        client.action(client.opts.channels[0], this._sentenceService.getSentence("raffle", "specialraffle", "start", 
-            {pointsname: this._userConfig.points_name, time}));
+        client.action(client.opts.channels[0], this._sentenceService.getSentence("raffle", "specialraffle", "start", user));
     }
 
     /**
@@ -116,10 +117,10 @@ export class RaffelService {
      * 
      * @param {client} client 
      */
-    private _raffleEnd(client: client): void {
+    private _raffleEnd(client: client, user: Userstate): void {
         this._started = false;
         if (this._users.length == 0) {
-            client.action(client.opts.channels[0], this._sentenceService.getSentence("raffle", "specialraffle", "no_one_joined"));
+            client.action(client.opts.channels[0], this._sentenceService.getSentence("raffle", "specialraffle", "no_one_joined", user));
             return;
         }
 
@@ -133,9 +134,8 @@ export class RaffelService {
         } else {
             this._increaseUserPoints(winUser.userId, winUser.username, points);
         }
-
-        client.action(client.opts.channels[0], this._sentenceService.getSentence("raffle", "specialraffle", "win", 
-            {pointsname: this._userConfig.points_name, winuser: winUser.displayName, points}))
+        this._sentenceService.setDataWithRaffle(user, new Raffle(0, winUser.username, winUser.displayName, points));
+        client.action(client.opts.channels[0], this._sentenceService.getSentence("raffle", "specialraffle", "win", user))
         this._users = [];
     }
 }

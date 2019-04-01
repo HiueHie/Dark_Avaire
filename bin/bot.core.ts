@@ -14,7 +14,12 @@ let tmi: Tmi = new Tmi(UserConfig);
 tmi.client.connect();
 
 tmi.client.on("connected", (address: string, port: number): void => {
-    tmi.client.action(UserConfig.channel_name, sentences.getSentence("core", "connected"));
+    tmi.client.action(UserConfig.channel_name, sentences.getSentence("core", "connected", "", 
+        new Userstate({
+            badges: {}, color: "", "display-name": "", emotes: false, id: "", mod: true, "room-id": 0,
+            subscriber: false, "tmi-sent-ts": 0, turbo: false, "user-id": 0, "user-type": "", "emotes-raw": "", "badges-raw": "",
+            username: "", "message-type": ""
+        })));
 });
 
 tmi.client.on("join", (channel: string, username: string, self: boolean): void => {
@@ -73,37 +78,37 @@ tmi.client.on("chat", (channel: string, user: any, message: string, self: boolea
 		'badges-raw': user['badges-raw'],
 		'username': user['username'],
 		'message-type': user['message-type']
-	});
+    });
+    
+    sentences.setDataToDefault(userstate, UserConfig, raffle.getUserCoins(userstate.userId));
 
 	if (userstate.username === "NAME") {
         if (messages[0] === "!queue") {
             if (messages[1] === "get") {
-                tmi.client.action(UserConfig.channel_name, song.getSongList());
-                let s = song.getSongList();
-                tmi.client.action(UserConfig.channel_name, s);
+                tmi.client.action(UserConfig.channel_name, song.getSongList(userstate));
             }
             if (messages[1] === "remove") {
-                tmi.client.action(UserConfig.channel_name, song.removeSong(messages[2]));
+                tmi.client.action(UserConfig.channel_name, song.removeSong(messages[2], user));
             }
         }
         if (messages[0] === "!specialraffle") {
-            raffle.specialRaffle(tmi.client);
+            raffle.specialRaffle(tmi.client, userstate);
         }
 		if (messages[0] === "!lockcommands") {
 			tmi.settings.unCommandsLocked = false;
-			tmi.client.action(UserConfig.channel_name, sentences.getSentence("core", "chat", "lockcommands"));
+			tmi.client.action(UserConfig.channel_name, sentences.getSentence("core", "chat", "lockcommands", userstate));
 		}
 		if (messages[0] === "!unlockcommands") {
 			tmi.settings.unCommandsLocked = true;
-			tmi.client.action(UserConfig.channel_name, sentences.getSentence("core", "chat", "unlockcommands"));
+			tmi.client.action(UserConfig.channel_name, sentences.getSentence("core", "chat", "unlockcommands", userstate));
         }
         if (messages[0] === "!priosub") {
             song.prioSub(true);
-            tmi.client.action(UserConfig.channel_name, sentences.getSentence("core", "chat", "priosub"));
+            tmi.client.action(UserConfig.channel_name, sentences.getSentence("core", "chat", "priosub", userstate));
         }
         if (messages[0] === "!unpriosub") {
             song.prioSub(false);
-            tmi.client.action(UserConfig.channel_name, sentences.getSentence("core", "chat", "unpriosub"));
+            tmi.client.action(UserConfig.channel_name, sentences.getSentence("core", "chat", "unpriosub", userstate));
         }
     }
     if (tmi.settings.unCommandsLocked) {
@@ -115,11 +120,11 @@ tmi.client.on("chat", (channel: string, user: any, message: string, self: boolea
             }
         }
         if (messages[0] === "!"+UserConfig.points_short) {
-            tmi.client.action(UserConfig.channel_name, sentences.getSentence("core", "chat", "get_coins", 
-                {username: userstate.displayName, points: raffle.getUserCoins(userstate.userId), pointsname: UserConfig.points_name}));
+            tmi.client.action(UserConfig.channel_name, sentences.getSentence("core", "chat", "get_coins", userstate));
         }
         if (messages[0] === "!join") {
             raffle.addUserToRaffle(userstate);
         }
     }
+    sentences.deleteData(userstate);
 });

@@ -9,7 +9,7 @@ export class FileService {
 
     /**
      * @description Gets the content of a file
-     * 
+     *
      * @returns {any}
      */
     public getFileContent(): any {
@@ -21,7 +21,7 @@ export class FileService {
 
     /**
      * @description Sets the content for a file
-     * 
+     *
      * @param {any} data
      */
     public setFileContent(data: any): void {

@@ -11,7 +11,7 @@ export class Tmi {
         this._optiions = {
             options: {
                 debug: true
-            }, 
+            },
             connection: {
                 cluster: "awa",
                 reconnect: true
@@ -28,7 +28,7 @@ export class Tmi {
 
     /**
      * @description Get the client
-     * 
+     *
      * @returns {client}
      */
     public get client(): client {

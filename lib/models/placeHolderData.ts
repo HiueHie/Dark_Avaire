@@ -16,7 +16,7 @@ export class Core {
     public points: number;
     public displayname: string;
 
-    constructor(username: string = "", pointsname: string = "", points: number = 0, displayname: string = "") { 
+    constructor(username: string = "", pointsname: string = "", points: number = 0, displayname: string = "") {
         this.username = username;
         this.pointsname = pointsname;
         this.points = points;
@@ -31,7 +31,7 @@ export class Song {
     public nextsongtitle: string;
     public nextsongusername: string;
 
-    constructor(songusername: string = "",songid: number = 0, songtitle: string = "", 
+    constructor(songusername: string = "",songid: number = 0, songtitle: string = "",
         nextsongtitle: string = "", nextsongusername: string = "") {
         this.songusername = songusername;
         this.songid = songid;

@@ -14,7 +14,7 @@ export class RaffelService {
     private _sentenceService: SentenceService;
     private _userConfig: any;
 
-    constructor(sentence: SentenceService, config: any) { 
+    constructor(sentence: SentenceService, config: any) {
         this._started = false;
         this._users = [];
         this._pointsToAll = false;
@@ -26,10 +26,10 @@ export class RaffelService {
 
     /**
      * @description Sets and/or updates a user
-     * 
-     * @param {number} id 
-     * @param {string} name 
-     * @param {number} points 
+     *
+     * @param {number} id
+     * @param {string} name
+     * @param {number} points
      */
     private _increaseUserPoints(id: number, name: string, points: number): void {
         let i: number = this._coins.findIndex(c => c.userId == id);
@@ -43,11 +43,11 @@ export class RaffelService {
 
     /**
      * @description Gets the current points of a user
-     * 
+     *
      * @tutorial !coins
-     * 
-     * @param {number} id 
-     * 
+     *
+     * @param {number} id
+     *
      * @returns {number}
      */
     public getUserCoins(id: number): number {
@@ -57,10 +57,10 @@ export class RaffelService {
 
     /**
      * @description Adds a user to the raffle event
-     * 
+     *
      * @tutorial !join
-     * 
-     * @param {Userstate} user 
+     *
+     * @param {Userstate} user
      */
     public addUserToRaffle(user: Userstate): void {
         if (!this._started) {
@@ -74,10 +74,10 @@ export class RaffelService {
 
     /**
      * @description Starts the special raffle event
-     * 
+     *
      * @tutorial !specialraffle
-     * 
-     * @param {client} client 
+     *
+     * @param {client} client
      */
     public specialRaffle(client: client, user: Userstate): void {
         this._started = true;
@@ -86,10 +86,10 @@ export class RaffelService {
     }
 
     /**
-     * @description Loop for the special raffle event 
-     * 
-     * @param {client} client 
-     * @param {number} time 
+     * @description Loop for the special raffle event
+     *
+     * @param {client} client
+     * @param {number} time
      */
     private _timeouts(client: client, time: number, user: Userstate): void {
         this._sentenceService.setDataWithRaffle(user, new Raffle(time));
@@ -114,8 +114,8 @@ export class RaffelService {
 
     /**
      * @description Ends the special raffle event and deal points
-     * 
-     * @param {client} client 
+     *
+     * @param {client} client
      */
     private _raffleEnd(client: client, user: Userstate): void {
         this._started = false;

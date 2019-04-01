@@ -3,7 +3,7 @@ import { SongService } from '../lib/services/song.service';
 import { Tmi } from '../lib/settings/bot.settings';
 import { GlobalService } from '../lib/services/global.service';
 import { Userstate } from '../lib/models/userstate';
-import * as UserConfig from "../config.json"; 
+import * as UserConfig from "../config.json";
 import { SentenceService } from "../lib/services/sentence.service";
 
 let sentences: SentenceService = new SentenceService();
@@ -14,7 +14,7 @@ let tmi: Tmi = new Tmi(UserConfig);
 tmi.client.connect();
 
 tmi.client.on("connected", (address: string, port: number): void => {
-    tmi.client.action(UserConfig.channel_name, sentences.getSentence("core", "connected", "", 
+    tmi.client.action(UserConfig.channel_name, sentences.getSentence("core", "connected", "",
         new Userstate({
             badges: {}, color: "", "display-name": "", emotes: false, id: "", mod: true, "room-id": 0,
             subscriber: false, "tmi-sent-ts": 0, turbo: false, "user-id": 0, "user-type": "", "emotes-raw": "", "badges-raw": "",

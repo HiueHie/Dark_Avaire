@@ -10,7 +10,7 @@ export class GeneralSettings {
 
     /**
      * @description Get the client id of the Twitch Bot
-     * 
+     *
      * @returns string
      */
     public get clientId(): string {
@@ -19,7 +19,7 @@ export class GeneralSettings {
 
     /**
      * @description Get the status if commands are locked
-     * 
+     *
      * @returns boolean
      */
     public get unCommandsLocked(): boolean {
@@ -28,7 +28,7 @@ export class GeneralSettings {
 
     /**
      * @description Set the status for commands allow
-     * 
+     *
      * @param {boolean} lock
      */
     public set unCommandsLocked(lock: boolean) {

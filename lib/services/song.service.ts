@@ -16,12 +16,12 @@ export class SongService {
 
     /**
      * @description Adds a requested song from a user to the queue
-     * 
+     *
      * @tutorial !queue add <song>
-     * 
-     * @param {Userstate} user 
-     * @param {string} message 
-     * 
+     *
+     * @param {Userstate} user
+     * @param {string} message
+     *
      * @returns {string} answer
      */
     public addSong(user: Userstate, message: string): string {
@@ -33,7 +33,7 @@ export class SongService {
 
         if (this._songList.find((s: SongRequestObject): boolean => s.username == user.username)) {
             return this._sentencesService.getSentence("song", "queue_add", "only_one_song", user);
-        } 
+        }
 
         let song: SongRequestObject = new SongRequestObject(user.username, messages[1], user.subscriber);
 
@@ -53,9 +53,9 @@ export class SongService {
 
     /**
      * @description Gets the current requested song list
-     * 
+     *
      * @tutorial !queue get
-     * 
+     *
      * @returns {string} queue
      */
     public getSongList(user: Userstate): string {
@@ -64,18 +64,18 @@ export class SongService {
             return this._sentencesService.getSentence("song", "queue_get", "no_songs", user);
         }
 
-        let songlist = this._songList.map(s => this._sentencesService.getSentenceWithOwnProperties("song", "queue_get", "song_list_look", 
+        let songlist = this._songList.map(s => this._sentencesService.getSentenceWithOwnProperties("song", "queue_get", "song_list_look",
                 {songid: s.id, songusername: s.username, songtitle: s.songTitle})).join(", ");
 
         return this._sentencesService.getSentenceWithOwnProperties("song", "queue_get", "success", {songlist});
     }
 
     /**
-     * @description Removes a requested song 
-     * 
+     * @description Removes a requested song
+     *
      * @tutorial !queue remove <id>
-     * 
-     * @param {any} id 
+     *
+     * @param {any} id
      */
     public removeSong(id: any, user): string {
         this._setUserSongData(user, "", id);
@@ -93,7 +93,7 @@ export class SongService {
         let song = this._songList.find(s => s.id == (id == null || id == "" ? 1 : id));
         this._songList.splice(id, 1);
         this._setSongListIds();
-        return this._sentencesService.getSentence("song", "queue_remove", 
+        return this._sentencesService.getSentence("song", "queue_remove",
                 (id == null || id == "" ? "success_granted" : "success_remove"), user);
     }
 
@@ -106,17 +106,17 @@ export class SongService {
 
     /**
      * @description Sets the prio
-     * 
+     *
      * @tutorial !priosub !unpriosub
-     * 
-     * @param {boolean} prio 
+     *
+     * @param {boolean} prio
      */
     public prioSub(prio: boolean = false): void {
         this._prioSub = prio;
     }
 
     private _setUserSongData(user: Userstate, songName: string, songId: any = false): void {
-        songId = songId ? songId : !this._prioSub ? this._songList.length : ( 
+        songId = songId ? songId : !this._prioSub ? this._songList.length : (
             user.subscriber ? this._songList.findIndex(s => !s.isPrio) + 1 : this._songList.length );
         let song = songId != 0 ? this._songList.find(s => s.id == songId) : new SongRequestObject(user.username, songName);
         let nextSong = songId != 0 ? this._songList.find(s => s.id == songId + 1) : new SongRequestObject();

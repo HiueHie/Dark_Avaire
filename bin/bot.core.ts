@@ -31,24 +31,7 @@ tmi.client.on("part", (channel: string, username: string, self: boolean): void =
 });
 
 tmi.client.on("whisper", (from: string, user: any, message: string, self: boolean): void => {
-    let userstate: Userstate = GlobalService.convertToInstance({
-        'badges': user['badges'],
-        'color': user['color'],
-        'display-name': user['display-name'],
-        'emotes': user['emotes'],
-        'id': user['id'],
-        'mod': user['mod'],
-        'room-id': user['room-id'],
-        'subscriber': user['subscriber'],
-        'tmi-sent-ts': user['tmi-sent-ts'],
-        'turbo': user['turbo'],
-        'user-id': user['user-id'],
-        'user-type': user['user-type'],
-        'emotes-raw': user['emotes-raw'],
-        'badges-raw': user['badges-raw'],
-        'username': user['username'],
-        'message-type': user['message-type']
-    });
+    let userstate: Userstate = GlobalService.convertToInstance(user);
 
     if (userstate.username === "NAME") {
         let messages: string[] = message.split(" ");
@@ -61,24 +44,7 @@ tmi.client.on("whisper", (from: string, user: any, message: string, self: boolea
 
 tmi.client.on("chat", (channel: string, user: any, message: string, self: boolean): void => {
 	let messages: string[] = message.split(" ");
-	let userstate: Userstate = GlobalService.convertToInstance({
-		'badges': user['badges'],
-		'color': user['color'],
-		'display-name': user['display-name'],
-		'emotes': user['emotes'],
-		'id': user['id'],
-		'mod': user['mod'],
-		'room-id': user['room-id'],
-		'subscriber': user['subscriber'],
-		'tmi-sent-ts': user['tmi-sent-ts'],
-		'turbo': user['turbo'],
-		'user-id': user['user-id'],
-		'user-type': user['user-type'],
-		'emotes-raw': user['emotes-raw'],
-		'badges-raw': user['badges-raw'],
-		'username': user['username'],
-		'message-type': user['message-type']
-    });
+	let userstate: Userstate = GlobalService.convertToInstance(user);
     
     sentences.setDataToDefault(userstate, UserConfig, raffle.getUserCoins(userstate.userId));
 

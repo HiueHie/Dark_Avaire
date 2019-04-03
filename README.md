@@ -20,6 +20,8 @@ Is a little Twitch Bot for free.
     * Only the winner gets 2 coins if subscriber then 3
 4. Everyone can see there points
 5. Admin's can lock and unlock commands
+6. Mods can make some special roles
+7. Everyone can see there current rights
 
 -------------------------------------
 
@@ -36,7 +38,12 @@ Is a little Twitch Bot for free.
         * !unlockcommands
         * !priosub
         * !unpriosub
+        * !rights
+            * add <username> <rightname>
+            * remove <username> <rightname>
+            * get <username>
     * Everyone
         * !queue add <song>
-        * !coins
+        * !coins (editable)
         * !join
+        * !rights get

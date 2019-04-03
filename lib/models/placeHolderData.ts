@@ -2,11 +2,13 @@ export class PlaceHolderData {
     public core: Core;
     public song: Song;
     public raffle: Raffle;
+    public rights: Rights;
 
     constructor() {
         this.core = new Core();
         this.song = new Song();
         this.raffle = new Raffle();
+        this.rights = new Rights();
     }
 }
 
@@ -52,5 +54,17 @@ export class Raffle {
         this.winusername = winusername;
         this.winuserdisplay = winuserdisplay;
         this.winpoints = winpoints;
+    }
+}
+
+export class Rights {
+    public targetusername: string;
+    public rightname: string;
+    public rightnames: string;
+
+    constructor(targetusername: string = "", rightname: string = "", rightnames: string = "") {
+        this.targetusername = targetusername;
+        this.rightname = rightname;
+        this.rightnames = rightnames;
     }
 }

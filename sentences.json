@@ -37,18 +37,22 @@
     },
     "rights": {
         "add": {
-            "no_broadcaster": "",
-            "success": ""
+            "no_target_user": "$username$, you forgot to wrote the target.",
+            "no_right_name": "$username$, you forgot to wrote the right.",
+            "no_broadcaster": "$username$, no one can be a broadcaster.",
+            "success": "$targetusername$ granted the right $rightname$."
         },
         "remove": {
-            "no_broadcaster": "",
-            "wrong_right": "",
-            "wrong_username": "",
-            "success": ""
+            "no_target_user": "$username$, you forgot to wrote the target.",
+            "no_right_name": "$username$, you forgot to wrote the right",
+            "no_broadcaster": "$username$, no one removed the boardcaster right.",
+            "wrong_right": "$username$, did you maybe wrote $rightname$ wrong?",
+            "wrong_username": "$username$, did you maybe wrote $targetusername$ wrong?",
+            "success": "$targetusername$ has lost the right $rightname$"
         },
         "get": {
-            "another": "",
-            "own": ""
+            "another": "$targetusername$ has these rights: $rightnames$",
+            "own": "$userdisplay$, you have these rights: $rightnames$"
         }
     }
 }

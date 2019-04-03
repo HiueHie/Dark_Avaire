@@ -1,4 +1,4 @@
-import { PlaceHolderData, Song, Raffle, Core } from "../models/placeHolderData";
+import { PlaceHolderData, Song, Raffle, Core, Rights } from "../models/placeHolderData";
 import { Userstate } from "../models/userstate";
 
 export class SentenceService {
@@ -37,6 +37,10 @@ export class SentenceService {
         this._data[user.userId].raffle = raffle;
     }
 
+    public setDatawithRights(user: Userstate, rights: Rights): void {
+        this._data[user.userId].rights = rights;
+    }
+
     public deleteData(user: Userstate): void {
         this._data[user.userId] = null;
     }
@@ -51,5 +55,9 @@ export class SentenceService {
 
     private _placeHoldersForRaffle(): string[] {
         return ["time", "winusername", "winuserdisplay", "winpoints"];
+    }
+
+    private _placeHoldersForRights(): string[] {
+        return ["targetuserdisplay", "targetusername", "rightname", "rightnames"];
     }
 }

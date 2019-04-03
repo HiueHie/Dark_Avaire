@@ -49,7 +49,7 @@ tmi.client.on("chat", (channel: string, user: any, message: string, self: boolea
     
     sentences.setDataToDefault(userstate, userConfigService.userConfig, raffle.getUserCoins(userstate.userId));
 
-    if (userConfigService.userConfig.rights.broadcaster == userstate.username 
+    if (userConfigService.userConfig.rights.broadcaster == userstate.username
         || userConfigService.userConfig.rights.mods.find(m => m == userstate.username)) {
         if (messages[0] === "!queue") {
             if (messages[1] === "get") {
@@ -80,12 +80,14 @@ tmi.client.on("chat", (channel: string, user: any, message: string, self: boolea
         }
         if (messages[0] === "!rights") {
             if (messages[1] === "add") {
-                tmi.client.action(userConfigService.userConfig.channel_name, userConfigService.addRight());
+                tmi.client.action(userConfigService.userConfig.channel_name, userConfigService.addRight(messages[3], messages[2], userstate));
             }
             if (messages[1] === "remove") {
-
+                tmi.client.action(userConfigService.userConfig.channel_name, userConfigService.removeRight(messages[3], messages[2], userstate));
             }
-            if (messages[1] === "get")
+            if (messages[1] === "get") {
+                tmi.client.action(userConfigService.userConfig.channel_name, userConfigService.getRight(user, messages[2]));
+            }
         }
     }
     if (tmi.settings.unCommandsLocked) {
@@ -103,7 +105,7 @@ tmi.client.on("chat", (channel: string, user: any, message: string, self: boolea
             raffle.addUserToRaffle(userstate);
         }
         if (messages[0] === "!rights" && messages[1] === "get") {
-
+            tmi.client.action(userConfigService.userConfig.channel_name, userConfigService.getRight(user));
         }
     }
     sentences.deleteData(userstate);

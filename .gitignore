@@ -11,7 +11,7 @@
 /node_modules
 
 # database
-/*.txt
+/coins_data.json
 
 # IDEs and editors
 /.idea

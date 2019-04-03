@@ -3,7 +3,7 @@ import * as fs from "fs";
 export class FileService {
     private _fielName: string;
 
-    constructor(fileName: string = "coins_data.txt") {
+    constructor(fileName: string) {
         this._fielName = fileName;
     }
 

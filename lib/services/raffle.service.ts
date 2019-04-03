@@ -18,7 +18,7 @@ export class RaffelService {
         this._started = false;
         this._users = [];
         this._pointsToAll = false;
-        this._fielService = new FileService();
+        this._fielService = new FileService("coins_data.json");
         this._coins = this._fielService.getFileContent();
         this._sentenceService = sentence;
         this._userConfig = config;
@@ -38,7 +38,6 @@ export class RaffelService {
         } else {
             this._coins.push(new Coin(id, name, points));
         }
-        this._fielService.setFileContent(this._coins);
     }
 
     /**
@@ -134,6 +133,7 @@ export class RaffelService {
         } else {
             this._increaseUserPoints(winUser.userId, winUser.username, points);
         }
+        this._fielService.setFileContent(this._coins);
         this._sentenceService.setDataWithRaffle(user, new Raffle(0, winUser.username, winUser.displayName, points));
         client.action(client.opts.channels[0], this._sentenceService.getSentence("raffle", "specialraffle", "win", user))
         this._users = [];

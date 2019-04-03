@@ -1,5 +1,9 @@
 {
     "channel_name": "CHANNEL_NAME",
+    "rights": {
+        "broadcaster": "YOUR_TWITCH_NAME",
+        "mods": []
+    },
     "points_name": "coins",
     "points_short": "coins",
     "raffle": {

@@ -34,5 +34,21 @@
             "unpriosub": "Subscribers are no longer prioritized in queue now.",
             "get_coins": "$username$, you have $points$ $pointsname$."
         }
+    },
+    "rights": {
+        "add": {
+            "no_broadcaster": "",
+            "success": ""
+        },
+        "remove": {
+            "no_broadcaster": "",
+            "wrong_right": "",
+            "wrong_username": "",
+            "success": ""
+        },
+        "get": {
+            "another": "",
+            "own": ""
+        }
     }
 }

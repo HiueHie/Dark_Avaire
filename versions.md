@@ -17,3 +17,6 @@ Start of Dark_Avaire
     * Only the winner gets 2 coins if subscriber then 3
 4. Everyone can see there points
 5. Admin's can lock and unlock commands
+6. Mods can make some special roles
+7. Everyone can see there current rights
+8. Editable sentences

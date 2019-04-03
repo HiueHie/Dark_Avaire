@@ -62,6 +62,6 @@ export class SentenceService {
     }
 
     private _placeHoldersForRights(): string[] {
-        return ['targetuserdisplay', 'targetusername', 'rightname', 'rightnames'];
+        return ['targetusername', 'rightname', 'rightnames'];
     }
 }

@@ -27,3 +27,8 @@ time => How many seconds are left
 winusername => The winning user of the raffle
 winuserdisplay => The winning user of the raffle
 winpoints => How many points he got
+
+Only availabel in right commands:
+targetusername => The written username
+rightname => The written right
+rightnames => All rights of target user

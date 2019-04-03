@@ -22,6 +22,7 @@ Is a little Twitch Bot for free.
 5. Admin's can lock and unlock commands
 6. Mods can make some special roles
 7. Everyone can see there current rights
+8. Editable sentences
 
 -------------------------------------
 

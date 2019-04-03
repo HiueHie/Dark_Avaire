@@ -1,7 +1,7 @@
-import { FileService } from "./file.service";
-import { Userstate } from "../models/userstate";
-import { SentenceService } from "./sentence.service";
 import { Rights } from "../models/placeHolderData";
+import { Userstate } from "../models/userstate";
+import { FileService } from "./file.service";
+import { SentenceService } from "./sentence.service";
 
 export class UserConfigService {
     private _fielService: FileService;
@@ -52,7 +52,7 @@ export class UserConfigService {
             this._userConfig.rights[rightName].splice(index, 1);
             this._fielService.setFileContent(this._userConfig);
             return this._sentencesService.getSentence("rights", "remove", "success", user);
-        } 
+        }
         return this._sentencesService.getSentence("rights", "remove", "wrong_username", user);
     }
 
@@ -67,7 +67,7 @@ export class UserConfigService {
 
     private _getRight(targetName: string): string {
         let rights: string[] = [];
-        Object.keys(this._userConfig.rights).forEach(g =>  {
+        Object.keys(this._userConfig.rights).forEach(g => {
             if (typeof this._userConfig.rights[g] == "string" && this._userConfig.rights[g] == targetName) {
                 rights.push(g);
             } else if (typeof this._userConfig.rights[g] != "string" && this._userConfig.rights[g].find(n => n == targetName)) {
@@ -83,7 +83,7 @@ export class UserConfigService {
 
     private _setUserRightsData(user: Userstate, targetName: string, rightName: string): void {
         targetName = targetName != "" ? targetName : "";
-        this._sentencesService.setDatawithRights(user, new Rights(targetName, 
+        this._sentencesService.setDatawithRights(user, new Rights(targetName,
             rightName != "" ? rightName : "", this._getRight(targetName)));
     }
 }

@@ -1,16 +1,16 @@
+import { GlobalService } from '../lib/services/global.service';
 import { RaffelService } from '../lib/services/raffle.service';
+import { SentenceService } from '../lib/services/sentence.service';
 import { SongService } from '../lib/services/song.service';
 import { Tmi } from '../lib/settings/bot.settings';
-import { GlobalService } from '../lib/services/global.service';
-import { Userstate } from '../lib/models/userstate';
-import { SentenceService } from '../lib/services/sentence.service';
 import { UserConfigService } from '../lib/services/user.config.service';
+import { Userstate } from '../lib/models/userstate';
 
-let sentences: SentenceService = new SentenceService();
-let userConfigService: UserConfigService = new UserConfigService(sentences);
-let raffle: RaffelService = new RaffelService(sentences, userConfigService.userConfig);
-let song: SongService = new SongService(sentences);
-let tmi: Tmi = new Tmi(userConfigService.userConfig);
+const sentences: SentenceService = new SentenceService();
+const userConfigService: UserConfigService = new UserConfigService(sentences);
+const raffle: RaffelService = new RaffelService(sentences, userConfigService.userConfig);
+const song: SongService = new SongService(sentences);
+const tmi: Tmi = new Tmi(userConfigService.userConfig);
 
 tmi.client.connect();
 
@@ -32,20 +32,20 @@ tmi.client.on('part', (channel: string, username: string, self: boolean): void =
 });
 
 tmi.client.on('whisper', (from: string, user: any, message: string, self: boolean): void => {
-    let userstate: Userstate = GlobalService.convertToInstance(user);
+    const userstate: Userstate = GlobalService.convertToInstance(user);
 
     if (userstate.username === userConfigService.userConfig.rights.broadcaster) {
-        let messages: string[] = message.split(' ');
+        const messages: string[] = message.split(' ');
     	if (messages[0] === '!say') {
             messages.shift();
-    		tmi.client.action(userConfigService.userConfig.channel_name, messages.join(' '));
-		}
+            tmi.client.action(userConfigService.userConfig.channel_name, messages.join(' '));
+        }
     }
 });
 
 tmi.client.on('chat', (channel: string, user: any, message: string, self: boolean): void => {
-	let messages: string[] = message.split(' ');
-	let userstate: Userstate = GlobalService.convertToInstance(user);
+	const messages: string[] = message.split(' ');
+	const userstate: Userstate = GlobalService.convertToInstance(user);
 
     sentences.setDataToDefault(userstate, userConfigService.userConfig, raffle.getUserCoins(userstate.userId));
 
@@ -93,12 +93,12 @@ tmi.client.on('chat', (channel: string, user: any, message: string, self: boolea
     if (tmi.settings.unCommandsLocked) {
         if (messages[0] === '!queue' && messages[1] === 'add') {
             if (messages[2] === '<song>') {
-                tmi.client.action(userConfigService.userConfig.channel_name, userstate.displayName+' FailFish');
+                tmi.client.action(userConfigService.userConfig.channel_name, userstate.displayName + ' FailFish');
             } else {
                 tmi.client.action(userConfigService.userConfig.channel_name, song.addSong(userstate, message));
             }
         }
-        if (messages[0] === '!'+userConfigService.userConfig.points_short) {
+        if (messages[0] === '!' + userConfigService.userConfig.points_short) {
             tmi.client.action(userConfigService.userConfig.channel_name, sentences.getSentence('core', 'chat', 'get_coins', userstate));
         }
         if (messages[0] === '!join') {

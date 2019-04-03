@@ -1,5 +1,5 @@
-import { GeneralSettings } from './general.settings';
 import { client } from '../../node_modules/tmi.js';
+import { GeneralSettings } from './general.settings';
 
 export class Tmi {
     public settings: GeneralSettings;
@@ -20,7 +20,9 @@ export class Tmi {
                 username: 'Dark_Avaire',
                 password: 'oauth:p8c1nc2ad7gdixp816a2j5f18wvjni'
             },
-            channels: [UserConfig.channel_name]
+            channels: [
+                UserConfig.channel_name
+            ]
         };
 
         this._client = new client(this._optiions);

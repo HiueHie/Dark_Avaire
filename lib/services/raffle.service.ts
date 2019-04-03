@@ -1,9 +1,9 @@
-import { Coin } from '../../lib/models/coins';
-import { Userstate } from '../../lib/models/userstate';
-import { FileService } from './file.service';
 import { client } from '../../node_modules/tmi.js';
+import { Coin } from '../../lib/models/coins';
+import { FileService } from './file.service';
+import { Raffle } from '../models/raffle';
 import { SentenceService } from './sentence.service';
-import { Raffle } from '../models/placeHolderData';
+import { Userstate } from '../../lib/models/userstate';
 
 export class RaffelService {
     private _coins: Coin[];
@@ -32,9 +32,9 @@ export class RaffelService {
      * @param {number} points
      */
     private _increaseUserPoints(id: number, name: string, points: number): void {
-        let i: number = this._coins.findIndex(c => c.userId == id);
+        const i: number = this._coins.findIndex(c => c.userId == id);
         if (i != null && i != -1) {
-            this._coins[i] = new Coin(id, name, this._coins[i].points+points);
+            this._coins[i] = new Coin(id, name, this._coins[i].points + points);
         } else {
             this._coins.push(new Coin(id, name, points));
         }
@@ -50,7 +50,7 @@ export class RaffelService {
      * @returns {number}
      */
     public getUserCoins(id: number): number {
-        let coin = this._coins.find(c => c.userId == id);
+        const coin = this._coins.find(c => c.userId == id);
         return coin != null ? coin.points : 0;
     }
 
@@ -99,7 +99,7 @@ export class RaffelService {
             t = Math.ceil(t / 2);
         }
 
-        let timeout = setTimeout(() => {
+        const timeout = setTimeout(() => {
             clearTimeout(timeout);
             if (t == 7) {
                 this._raffleEnd(client, user);
@@ -123,10 +123,10 @@ export class RaffelService {
             return;
         }
 
-        let winUser: Userstate = this._users[Math.floor(Math.random() * this._users.length)];
-        let rewards = this._userConfig.raffle.rewards;
-        let points = winUser.subscriber ? rewards.sub_user : rewards.normal_user;
-        
+        const winUser: Userstate = this._users[Math.floor(Math.random() * this._users.length)];
+        const rewards = this._userConfig.raffle.rewards;
+        const points = winUser.subscriber ? rewards.sub_user : rewards.normal_user;
+
         if (this._pointsToAll) {
             this._users.forEach(u => this._increaseUserPoints(u.userId, u.username, rewards.everyone));
             this._increaseUserPoints(winUser.userId, winUser.username, points - rewards.everyone);
@@ -135,7 +135,7 @@ export class RaffelService {
         }
         this._fielService.setFileContent(this._coins);
         this._setUserRaffleData(user, 0, winUser.username, winUser.displayName, points);
-        client.action(client.opts.channels[0], this._sentenceService.getSentence('raffle', 'specialraffle', 'win', user))
+        client.action(client.opts.channels[0], this._sentenceService.getSentence('raffle', 'specialraffle', 'win', user));
         this._users = [];
     }
 

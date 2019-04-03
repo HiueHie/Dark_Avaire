@@ -1,4 +1,8 @@
-import { PlaceHolderData, Song, Raffle, Core, Rights } from '../models/placeHolderData';
+import { Core } from '../models/core';
+import { PlaceHolderData } from '../models/placeHolderData';
+import { Raffle } from '../models/raffle';
+import { Rights } from '../models/rights';
+import { Song } from '../models/song';
 import { Userstate } from '../models/userstate';
 
 export class SentenceService {
@@ -10,17 +14,17 @@ export class SentenceService {
         this._userSentences = require('../../sentences.json');
     }
 
-    public getSentence(service: string, method: string, answer: string = '', user: Userstate): string {
+    public getSentence(service: string, method: string, answer = '', user: Userstate): string {
         let result = answer != '' ? this._userSentences[service][method][answer] : this._userSentences[service][method];
-        Object.keys([...this._placeHolders, this['_placeHoldersFor'+service[0].toUpperCase]])
-                .forEach(k => result = result.replace('$'+k+'$', this._data[user.userId][service][k]));
+        Object.keys([...this._placeHolders, this['_placeHoldersFor' + service[0].toUpperCase]])
+                .forEach(k => result = result.replace('$' + k + '$', this._data[user.userId][service][k]));
         return result;
     }
 
-    public getSentenceWithOwnProperties(service: string, method: string, answer: string = '', obj: object): string {
+    public getSentenceWithOwnProperties(service: string, method: string, answer = '', obj: object): string {
         let result = answer != '' ? this._userSentences[service][method][answer] : this._userSentences[service][method];
-        Object.keys([...this._placeHolders, this['_placeHoldersFor'+service[0].toUpperCase]])
-                .forEach(k => result = result.replace('$'+k+'$', obj[k]));
+        Object.keys([...this._placeHolders, this['_placeHoldersFor' + service[0].toUpperCase]])
+                .forEach(k => result = result.replace('$' + k + '$', obj[k]));
         return result;
     }
 

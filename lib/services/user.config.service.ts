@@ -1,4 +1,4 @@
-import { Rights } from '../models/placeHolderData';
+import { Rights } from '../models/rights';
 import { Userstate } from '../models/userstate';
 import { FileService } from './file.service';
 import { SentenceService } from './sentence.service';
@@ -47,7 +47,7 @@ export class UserConfigService {
         if (!this._userConfig.rights[rightName]) {
             return this._sentencesService.getSentence('rights', 'remove', 'wrong_right', user);
         }
-        let index: number = this._userConfig.rights[rightName].findIndex(u => u == targetName);
+        const index: number = this._userConfig.rights[rightName].findIndex(u => u == targetName);
         if (index > 0) {
             this._userConfig.rights[rightName].splice(index, 1);
             this._fielService.setFileContent(this._userConfig);
@@ -56,7 +56,7 @@ export class UserConfigService {
         return this._sentencesService.getSentence('rights', 'remove', 'wrong_username', user);
     }
 
-    public getRight(user: Userstate, targetName: string = ''): string {
+    public getRight(user: Userstate, targetName = ''): string {
         if (targetName != null && targetName != '') {
             this._setUserRightsData(user, targetName, '');
             return this._sentencesService.getSentence('rights', 'get', 'another', user);
@@ -66,7 +66,7 @@ export class UserConfigService {
     }
 
     private _getRight(targetName: string): string {
-        let rights: string[] = [];
+        const rights: string[] = [];
         Object.keys(this._userConfig.rights).forEach(g => {
             if (typeof this._userConfig.rights[g] == 'string' && this._userConfig.rights[g] == targetName) {
                 rights.push(g);

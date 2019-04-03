@@ -1,7 +1,7 @@
+import { SentenceService } from './sentence.service';
+import { Song } from '../models/song';
 import { SongRequestObject } from '../../lib/models/songRequestObject';
 import { Userstate } from '../../lib/models/userstate';
-import { SentenceService } from './sentence.service';
-import { Song } from '../models/placeHolderData';
 
 export class SongService {
     private _songList: SongRequestObject[];
@@ -25,7 +25,7 @@ export class SongService {
      * @returns {string} answer
      */
     public addSong(user: Userstate, message: string): string {
-        let messages = message.split('!queue add ');
+        const messages = message.split('!queue add ');
         this._setUserSongData(user, messages[1]);
         if (messages[1] == null) {
             return this._sentencesService.getSentence('song', 'queue_add', 'nothing', user);
@@ -35,7 +35,7 @@ export class SongService {
             return this._sentencesService.getSentence('song', 'queue_add', 'only_one_song', user);
         }
 
-        let song: SongRequestObject = new SongRequestObject(user.username, messages[1], user.subscriber);
+        const song: SongRequestObject = new SongRequestObject(user.username, messages[1], user.subscriber);
 
         if (!this._prioSub) {
             this._songList.push(song);
@@ -64,7 +64,7 @@ export class SongService {
             return this._sentencesService.getSentence('song', 'queue_get', 'no_songs', user);
         }
 
-        let songlist = this._songList.map(s => this._sentencesService.getSentenceWithOwnProperties('song', 'queue_get', 'song_list_look',
+        const songlist = this._songList.map(s => this._sentencesService.getSentenceWithOwnProperties('song', 'queue_get', 'song_list_look',
                 {songid: s.id, songusername: s.username, songtitle: s.songTitle})).join(', ');
 
         return this._sentencesService.getSentenceWithOwnProperties('song', 'queue_get', 'success', {songlist});
@@ -77,7 +77,7 @@ export class SongService {
      *
      * @param {any} id
      */
-    public removeSong(id: any, user): string {
+    public removeSong(id: any, user: Userstate): string {
         this._setUserSongData(user, '', id);
         if (id === 'all') {
             this._songList = [];
@@ -90,7 +90,6 @@ export class SongService {
             return this._sentencesService.getSentence('song', 'queue_remove', 'invalide', user);
         }
 
-        let song = this._songList.find(s => s.id == (id == null || id == '' ? 1 : id));
         this._songList.splice(id, 1);
         this._setSongListIds();
         return this._sentencesService.getSentence('song', 'queue_remove',
@@ -101,7 +100,7 @@ export class SongService {
      * @description Sets the song list ids
      */
     private _setSongListIds(): void {
-        this._songList.forEach((s: SongRequestObject, i: number): number => s.id = i+1);
+        this._songList.forEach((s: SongRequestObject, i: number): number => s.id = i + 1);
     }
 
     /**
@@ -111,16 +110,16 @@ export class SongService {
      *
      * @param {boolean} prio
      */
-    public prioSub(prio: boolean = false): void {
+    public prioSub(prio = false): void {
         this._prioSub = prio;
     }
 
     private _setUserSongData(user: Userstate, songName: string, songId: any = false): void {
         songId = songId ? songId : !this._prioSub ? this._songList.length : (
             user.subscriber ? this._songList.findIndex(s => !s.isPrio) + 1 : this._songList.length );
-        let song = songId != 0 ? this._songList.find(s => s.id == songId) : new SongRequestObject(user.username, songName);
-        let nextSong = songId != 0 ? this._songList.find(s => s.id == songId + 1) : new SongRequestObject();
-        this._sentencesService.setDataWithSong(user, new Song(song.username, songId == 0 ? 1 : songId, song.songTitle, 
+        const song = songId != 0 ? this._songList.find(s => s.id == songId) : new SongRequestObject(user.username, songName);
+        const nextSong = songId != 0 ? this._songList.find(s => s.id == songId + 1) : new SongRequestObject();
+        this._sentencesService.setDataWithSong(user, new Song(song.username, songId == 0 ? 1 : songId, song.songTitle,
             nextSong.songTitle, nextSong.username));
     }
 }

@@ -1,8 +1,8 @@
 import { Rights } from '../models/rights';
+import { UserConfig } from '../models/userConfig';
 import { Userstate } from '../models/userstate';
 import { FileService } from './file.service';
 import { SentenceService } from './sentence.service';
-import { UserConfig } from '../models/userConfig';
 
 export class UserConfigService {
     private _fielService: FileService;

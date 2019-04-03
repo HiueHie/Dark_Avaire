@@ -6,6 +6,8 @@
     "jsRules": {},
     "rules": {
         "align":false,
+        "arrow-parens": false,
+        "object-literal-key-quotes":false,
         "class-name": true,
         "comment-format": [true, "check-space"],
         "curly": true,
@@ -25,7 +27,7 @@
         "no-empty": false,
         "no-eval": true,
         "no-inferrable-types": true,
-        "no-shadowed-variable": true,
+        "no-shadowed-variable": false,
         "no-string-literal": false,
         "no-switch-case-fall-through": true,
         "no-trailing-whitespace": true,

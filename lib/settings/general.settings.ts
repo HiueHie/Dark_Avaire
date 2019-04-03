@@ -4,7 +4,7 @@ export class GeneralSettings {
     private _unCommandsLocked: boolean;
 
     constructor() {
-        this._clientId = "k5qcgssj9ck3xnronc0brarej112g3";
+        this._clientId = 'k5qcgssj9ck3xnronc0brarej112g3';
         this._unCommandsLocked = true;
     }
 

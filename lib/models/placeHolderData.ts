@@ -18,7 +18,7 @@ export class Core {
     public points: number;
     public displayname: string;
 
-    constructor(username: string = "", pointsname: string = "", points: number = 0, displayname: string = "") {
+    constructor(username: string = '', pointsname: string = '', points: number = 0, displayname: string = '') {
         this.username = username;
         this.pointsname = pointsname;
         this.points = points;
@@ -33,8 +33,8 @@ export class Song {
     public nextsongtitle: string;
     public nextsongusername: string;
 
-    constructor(songusername: string = "",songid: number = 0, songtitle: string = "",
-        nextsongtitle: string = "", nextsongusername: string = "") {
+    constructor(songusername: string = '',songid: number = 0, songtitle: string = '',
+        nextsongtitle: string = '', nextsongusername: string = '') {
         this.songusername = songusername;
         this.songid = songid;
         this.songtitle = songtitle;
@@ -49,7 +49,7 @@ export class Raffle {
     public winuserdisplay: string;
     public winpoints: number;
 
-    constructor(time: number = 0, winusername: string = "", winuserdisplay: string = "", winpoints: number = 0) {
+    constructor(time: number = 0, winusername: string = '', winuserdisplay: string = '', winpoints: number = 0) {
         this.time = time;
         this.winusername = winusername;
         this.winuserdisplay = winuserdisplay;
@@ -62,7 +62,7 @@ export class Rights {
     public rightname: string;
     public rightnames: string;
 
-    constructor(targetusername: string = "", rightname: string = "", rightnames: string = "") {
+    constructor(targetusername: string = '', rightname: string = '', rightnames: string = '') {
         this.targetusername = targetusername;
         this.rightname = rightname;
         this.rightnames = rightnames;

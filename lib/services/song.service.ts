@@ -25,14 +25,14 @@ export class SongService {
      * @returns {string} answer
      */
     public addSong(user: Userstate, message: string): string {
-        let messages = message.split("!queue add ");
+        let messages = message.split('!queue add ');
         this._setUserSongData(user, messages[1]);
         if (messages[1] == null) {
-            return this._sentencesService.getSentence("song", "queue_add", "nothing", user);
+            return this._sentencesService.getSentence('song', 'queue_add', 'nothing', user);
         }
 
         if (this._songList.find((s: SongRequestObject): boolean => s.username == user.username)) {
-            return this._sentencesService.getSentence("song", "queue_add", "only_one_song", user);
+            return this._sentencesService.getSentence('song', 'queue_add', 'only_one_song', user);
         }
 
         let song: SongRequestObject = new SongRequestObject(user.username, messages[1], user.subscriber);
@@ -48,7 +48,7 @@ export class SongService {
         }
 
         this._setSongListIds();
-        return this._sentencesService.getSentence("song", "queue_add", "success", user);
+        return this._sentencesService.getSentence('song', 'queue_add', 'success', user);
     }
 
     /**
@@ -59,15 +59,15 @@ export class SongService {
      * @returns {string} queue
      */
     public getSongList(user: Userstate): string {
-        this._setUserSongData(user, "");
+        this._setUserSongData(user, '');
         if (this._songList.length == 0) {
-            return this._sentencesService.getSentence("song", "queue_get", "no_songs", user);
+            return this._sentencesService.getSentence('song', 'queue_get', 'no_songs', user);
         }
 
-        let songlist = this._songList.map(s => this._sentencesService.getSentenceWithOwnProperties("song", "queue_get", "song_list_look",
-                {songid: s.id, songusername: s.username, songtitle: s.songTitle})).join(", ");
+        let songlist = this._songList.map(s => this._sentencesService.getSentenceWithOwnProperties('song', 'queue_get', 'song_list_look',
+                {songid: s.id, songusername: s.username, songtitle: s.songTitle})).join(', ');
 
-        return this._sentencesService.getSentenceWithOwnProperties("song", "queue_get", "success", {songlist});
+        return this._sentencesService.getSentenceWithOwnProperties('song', 'queue_get', 'success', {songlist});
     }
 
     /**
@@ -78,23 +78,23 @@ export class SongService {
      * @param {any} id
      */
     public removeSong(id: any, user): string {
-        this._setUserSongData(user, "", id);
-        if (id === "all") {
+        this._setUserSongData(user, '', id);
+        if (id === 'all') {
             this._songList = [];
-            return this._sentencesService.getSentence("song", "queue_remove", "all", user);
+            return this._sentencesService.getSentence('song', 'queue_remove', 'all', user);
         }
         if (this._songList.length == 0) {
-            return this._sentencesService.getSentence("song", "queue_remove", "no_songs", user);
+            return this._sentencesService.getSentence('song', 'queue_remove', 'no_songs', user);
         }
         if (this._songList.length > id || id < 0) {
-            return this._sentencesService.getSentence("song", "queue_remove", "invalide", user);
+            return this._sentencesService.getSentence('song', 'queue_remove', 'invalide', user);
         }
 
-        let song = this._songList.find(s => s.id == (id == null || id == "" ? 1 : id));
+        let song = this._songList.find(s => s.id == (id == null || id == '' ? 1 : id));
         this._songList.splice(id, 1);
         this._setSongListIds();
-        return this._sentencesService.getSentence("song", "queue_remove",
-                (id == null || id == "" ? "success_granted" : "success_remove"), user);
+        return this._sentencesService.getSentence('song', 'queue_remove',
+                (id == null || id == '' ? 'success_granted' : 'success_remove'), user);
     }
 
     /**
@@ -120,6 +120,7 @@ export class SongService {
             user.subscriber ? this._songList.findIndex(s => !s.isPrio) + 1 : this._songList.length );
         let song = songId != 0 ? this._songList.find(s => s.id == songId) : new SongRequestObject(user.username, songName);
         let nextSong = songId != 0 ? this._songList.find(s => s.id == songId + 1) : new SongRequestObject();
-        this._sentencesService.setDataWithSong(user, new Song(song.username, songId == 0 ? 1 : songId, song.songTitle, nextSong.songTitle, nextSong.username));
+        this._sentencesService.setDataWithSong(user, new Song(song.username, songId == 0 ? 1 : songId, song.songTitle, 
+            nextSong.songTitle, nextSong.username));
     }
 }

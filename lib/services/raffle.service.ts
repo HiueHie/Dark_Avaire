@@ -1,7 +1,7 @@
 import { Coin } from '../../lib/models/coins';
 import { Userstate } from '../../lib/models/userstate';
 import { FileService } from './file.service';
-import { client } from "../../node_modules/tmi.js";
+import { client } from '../../node_modules/tmi.js';
 import { SentenceService } from './sentence.service';
 import { Raffle } from '../models/placeHolderData';
 
@@ -18,7 +18,7 @@ export class RaffelService {
         this._started = false;
         this._users = [];
         this._pointsToAll = false;
-        this._fielService = new FileService("coins_data.json");
+        this._fielService = new FileService('coins_data.json');
         this._coins = this._fielService.getFileContent();
         this._sentenceService = sentence;
         this._userConfig = config;
@@ -91,7 +91,7 @@ export class RaffelService {
      * @param {number} time
      */
     private _timeouts(client: client, time: number, user: Userstate): void {
-        this._setUserRaffleData(user, time, "", "", 0);
+        this._setUserRaffleData(user, time, '', '', 0);
         let t: number = time;
         if (t == 8) {
             t = 7;
@@ -108,7 +108,7 @@ export class RaffelService {
             }
         }, 1000 * t);
 
-        client.action(client.opts.channels[0], this._sentenceService.getSentence("raffle", "specialraffle", "start", user));
+        client.action(client.opts.channels[0], this._sentenceService.getSentence('raffle', 'specialraffle', 'start', user));
     }
 
     /**
@@ -119,7 +119,7 @@ export class RaffelService {
     private _raffleEnd(client: client, user: Userstate): void {
         this._started = false;
         if (this._users.length == 0) {
-            client.action(client.opts.channels[0], this._sentenceService.getSentence("raffle", "specialraffle", "no_one_joined", user));
+            client.action(client.opts.channels[0], this._sentenceService.getSentence('raffle', 'specialraffle', 'no_one_joined', user));
             return;
         }
 
@@ -135,7 +135,7 @@ export class RaffelService {
         }
         this._fielService.setFileContent(this._coins);
         this._setUserRaffleData(user, 0, winUser.username, winUser.displayName, points);
-        client.action(client.opts.channels[0], this._sentenceService.getSentence("raffle", "specialraffle", "win", user))
+        client.action(client.opts.channels[0], this._sentenceService.getSentence('raffle', 'specialraffle', 'win', user))
         this._users = [];
     }
 

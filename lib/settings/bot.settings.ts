@@ -1,5 +1,5 @@
 import { GeneralSettings } from './general.settings';
-import { client } from "../../node_modules/tmi.js";
+import { client } from '../../node_modules/tmi.js';
 
 export class Tmi {
     public settings: GeneralSettings;
@@ -13,12 +13,12 @@ export class Tmi {
                 debug: true
             },
             connection: {
-                cluster: "awa",
+                cluster: 'awa',
                 reconnect: true
             },
             identity: {
-                username: "Dark_Avaire",
-                password: "oauth:p8c1nc2ad7gdixp816a2j5f18wvjni"
+                username: 'Dark_Avaire',
+                password: 'oauth:p8c1nc2ad7gdixp816a2j5f18wvjni'
             },
             channels: [UserConfig.channel_name]
         };

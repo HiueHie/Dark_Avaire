@@ -1,26 +1,26 @@
-import { PlaceHolderData, Song, Raffle, Core, Rights } from "../models/placeHolderData";
-import { Userstate } from "../models/userstate";
+import { PlaceHolderData, Song, Raffle, Core, Rights } from '../models/placeHolderData';
+import { Userstate } from '../models/userstate';
 
 export class SentenceService {
     private _userSentences: any;
-    private _placeHolders: string[] = ["username", "pointsname", "points", "displayname"];
+    private _placeHolders: string[] = ['username', 'pointsname', 'points', 'displayname'];
     private _data: {[userId: number]: PlaceHolderData};
 
     constructor() {
-        this._userSentences = require("../../sentences.json");
+        this._userSentences = require('../../sentences.json');
     }
 
-    public getSentence(service: string, method: string, answer: string = "", user: Userstate): string {
-        let result = answer != "" ? this._userSentences[service][method][answer] : this._userSentences[service][method];
-        Object.keys([...this._placeHolders, this["_placeHoldersFor"+service[0].toUpperCase]])
-                .forEach(k => result = result.replace("$"+k+"$", this._data[user.userId][service][k]));
+    public getSentence(service: string, method: string, answer: string = '', user: Userstate): string {
+        let result = answer != '' ? this._userSentences[service][method][answer] : this._userSentences[service][method];
+        Object.keys([...this._placeHolders, this['_placeHoldersFor'+service[0].toUpperCase]])
+                .forEach(k => result = result.replace('$'+k+'$', this._data[user.userId][service][k]));
         return result;
     }
 
-    public getSentenceWithOwnProperties(service: string, method: string, answer: string = "", obj: object): string {
-        let result = answer != "" ? this._userSentences[service][method][answer] : this._userSentences[service][method];
-        Object.keys([...this._placeHolders, this["_placeHoldersFor"+service[0].toUpperCase]])
-                .forEach(k => result = result.replace("$"+k+"$", obj[k]));
+    public getSentenceWithOwnProperties(service: string, method: string, answer: string = '', obj: object): string {
+        let result = answer != '' ? this._userSentences[service][method][answer] : this._userSentences[service][method];
+        Object.keys([...this._placeHolders, this['_placeHoldersFor'+service[0].toUpperCase]])
+                .forEach(k => result = result.replace('$'+k+'$', obj[k]));
         return result;
     }
 
@@ -50,14 +50,14 @@ export class SentenceService {
     }
 
     private _placeHoldersForSong(): string[] {
-        return ["songusername", "songid", "songlist", "songtitle", "nextsongtitle", "nextsongusername"];
+        return ['songusername', 'songid', 'songlist', 'songtitle', 'nextsongtitle', 'nextsongusername'];
     }
 
     private _placeHoldersForRaffle(): string[] {
-        return ["time", "winusername", "winuserdisplay", "winpoints"];
+        return ['time', 'winusername', 'winuserdisplay', 'winpoints'];
     }
 
     private _placeHoldersForRights(): string[] {
-        return ["targetuserdisplay", "targetusername", "rightname", "rightnames"];
+        return ['targetuserdisplay', 'targetusername', 'rightname', 'rightnames'];
     }
 }

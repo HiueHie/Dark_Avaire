@@ -1,7 +1,7 @@
+import { SongRequestObject } from '../../lib/models/songRequestObject';
+import { Userstate } from '../../lib/models/userstate';
 import { Song } from '../models/song';
 import { SentenceService } from './sentence.service';
-import { Userstate } from '../../lib/models/userstate';
-import { SongRequestObject } from '../../lib/models/songRequestObject';
 
 export class SongService {
     private _songList: SongRequestObject[];

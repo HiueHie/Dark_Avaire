@@ -1,9 +1,9 @@
 import { FileService } from './file.service';
-import { Raffle } from '../models/raffle';
-import { SentenceService } from './sentence.service';
 import { Coin } from '../../lib/models/coins';
-import { client } from '../../node_modules/tmi.js';
 import { Userstate } from '../../lib/models/userstate';
+import { Raffle } from '../models/raffle';
+import { client } from '../../node_modules/tmi.js';
+import { SentenceService } from './sentence.service';
 
 export class RaffelService {
     private _coins: Coin[];

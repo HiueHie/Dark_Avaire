@@ -3,8 +3,8 @@ import { GlobalService } from '../lib/services/global.service';
 import { RaffelService } from '../lib/services/raffle.service';
 import { SentenceService } from '../lib/services/sentence.service';
 import { SongService } from '../lib/services/song.service';
-import { Tmi } from '../lib/settings/bot.settings';
 import { UserConfigService } from '../lib/services/user.config.service';
+import { Tmi } from '../lib/settings/bot.settings';
 
 const sentences: SentenceService = new SentenceService();
 const userConfigService: UserConfigService = new UserConfigService(sentences);

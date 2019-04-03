@@ -25,22 +25,6 @@ export class RaffelService {
     }
 
     /**
-     * @description Sets and/or updates a user
-     *
-     * @param {number} id
-     * @param {string} name
-     * @param {number} points
-     */
-    private _increaseUserPoints(id: number, name: string, points: number): void {
-        const i: number = this._coins.findIndex(c => c.userId == id);
-        if (i != null && i != -1) {
-            this._coins[i] = new Coin(id, name, this._coins[i].points + points);
-        } else {
-            this._coins.push(new Coin(id, name, points));
-        }
-    }
-
-    /**
      * @description Gets the current points of a user
      *
      * @tutorial !coins
@@ -137,6 +121,22 @@ export class RaffelService {
         this._setUserRaffleData(user, 0, winUser.username, winUser.displayName, points);
         client.action(client.opts.channels[0], this._sentenceService.getSentence('raffle', 'specialraffle', 'win', user));
         this._users = [];
+    }
+
+    /**
+     * @description Sets and/or updates a user
+     *
+     * @param {number} id
+     * @param {string} name
+     * @param {number} points
+     */
+    private _increaseUserPoints(id: number, name: string, points: number): void {
+        const i: number = this._coins.findIndex(c => c.userId == id);
+        if (i != null && i != -1) {
+            this._coins[i] = new Coin(id, name, this._coins[i].points + points);
+        } else {
+            this._coins.push(new Coin(id, name, points));
+        }
     }
 
     private _setUserRaffleData(user: Userstate, time: number, winusername: string, winuserdisplay: string, winningpoints: number): void {

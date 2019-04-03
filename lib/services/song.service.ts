@@ -15,6 +15,25 @@ export class SongService {
     }
 
     /**
+     * @description Gets the current requested song list
+     *
+     * @tutorial !queue get
+     *
+     * @returns {string} queue
+     */
+    public getSongList(user: Userstate): string {
+        this._setUserSongData(user, '');
+        if (this._songList.length == 0) {
+            return this._sentencesService.getSentence('song', 'queue_get', 'no_songs', user);
+        }
+
+        const songlist = this._songList.map(s => this._sentencesService.getSentenceWithOwnProperties('song', 'queue_get', 'song_list_look',
+                {songid: s.id, songusername: s.username, songtitle: s.songTitle})).join(', ');
+
+        return this._sentencesService.getSentenceWithOwnProperties('song', 'queue_get', 'success', {songlist});
+    }
+
+    /**
      * @description Adds a requested song from a user to the queue
      *
      * @tutorial !queue add <song>
@@ -52,25 +71,6 @@ export class SongService {
     }
 
     /**
-     * @description Gets the current requested song list
-     *
-     * @tutorial !queue get
-     *
-     * @returns {string} queue
-     */
-    public getSongList(user: Userstate): string {
-        this._setUserSongData(user, '');
-        if (this._songList.length == 0) {
-            return this._sentencesService.getSentence('song', 'queue_get', 'no_songs', user);
-        }
-
-        const songlist = this._songList.map(s => this._sentencesService.getSentenceWithOwnProperties('song', 'queue_get', 'song_list_look',
-                {songid: s.id, songusername: s.username, songtitle: s.songTitle})).join(', ');
-
-        return this._sentencesService.getSentenceWithOwnProperties('song', 'queue_get', 'success', {songlist});
-    }
-
-    /**
      * @description Removes a requested song
      *
      * @tutorial !queue remove <id>
@@ -97,13 +97,6 @@ export class SongService {
     }
 
     /**
-     * @description Sets the song list ids
-     */
-    private _setSongListIds(): void {
-        this._songList.forEach((s: SongRequestObject, i: number): number => s.id = i + 1);
-    }
-
-    /**
      * @description Sets the prio
      *
      * @tutorial !priosub !unpriosub
@@ -112,6 +105,13 @@ export class SongService {
      */
     public prioSub(prio = false): void {
         this._prioSub = prio;
+    }
+
+    /**
+     * @description Sets the song list ids
+     */
+    private _setSongListIds(): void {
+        this._songList.forEach((s: SongRequestObject, i: number): number => s.id = i + 1);
     }
 
     private _setUserSongData(user: Userstate, songName: string, songId: any = false): void {

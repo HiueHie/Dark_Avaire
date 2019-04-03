@@ -15,6 +15,10 @@ export class UserConfigService {
         this._sentencesService = sentence;
     }
 
+    public get userConfig(): UserConfig {
+        return this._userConfig;
+    }
+
     public addRight(rightName: string, targetName: string, user: Userstate): string {
         this._setUserRightsData(user, targetName, rightName);
         if (targetName == '' || targetName == null) {
@@ -74,10 +78,6 @@ export class UserConfigService {
             }
         });
         return rights.join(', ');
-    }
-
-    public get userConfig(): UserConfig {
-        return this._userConfig;
     }
 
     private _setUserRightsData(user: Userstate, targetName: string, rightName: string): void {

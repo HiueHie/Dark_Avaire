@@ -7,11 +7,11 @@ import { Userstate } from '../models/userstate';
 
 export class SentenceService {
     private _userSentences: any;
+    private _data: {[userId: number]: PlaceHolderData};
     private _placeHoldersForCore: string[] = ['username', 'pointsname', 'points', 'displayname'];
     private _placeHoldersForSong: string[] = ['songusername', 'songid', 'songlist', 'songtitle', 'nextsongtitle', 'nextsongusername'];
     private _placeHoldersForRaffle: string[] = ['time', 'winusername', 'winuserdisplay', 'winpoints'];
     private _placeHoldersForRights: string[] = ['targetusername', 'rightname', 'rightnames'];
-    private _data: {[userId: number]: PlaceHolderData};
 
     constructor() {
         this._userSentences = require('../../sentences.json');
@@ -36,6 +36,10 @@ export class SentenceService {
         this._data[user.userId].core = new Core(user.username, userConfig.points_name, userPoints, user.displayName);
     }
 
+    public deleteData(user: Userstate): void {
+        this._data[user.userId] = null;
+    }
+
     public setDataWithSong(user: Userstate, song: Song): void {
         this._data[user.userId].song = song;
     }
@@ -46,9 +50,5 @@ export class SentenceService {
 
     public setDatawithRights(user: Userstate, rights: Rights): void {
         this._data[user.userId].rights = rights;
-    }
-
-    public deleteData(user: Userstate): void {
-        this._data[user.userId] = null;
     }
 }

@@ -5,6 +5,7 @@ export class UserConfig {
     public points_name: string;
     public points_short: string;
     public raffle: Raffle;
+    public messages: {[minutes: string]: string[]}
 }
 
 class Raffle {

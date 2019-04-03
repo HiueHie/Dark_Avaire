@@ -2,10 +2,11 @@ import { Rights } from '../models/rights';
 import { Userstate } from '../models/userstate';
 import { FileService } from './file.service';
 import { SentenceService } from './sentence.service';
+import { UserConfig } from '../models/userConfig';
 
 export class UserConfigService {
     private _fielService: FileService;
-    private _userConfig: any;
+    private _userConfig: UserConfig;
     private _sentencesService: SentenceService;
 
     constructor(sentence: SentenceService) {
@@ -68,16 +69,14 @@ export class UserConfigService {
     private _getRight(targetName: string): string {
         const rights: string[] = [];
         Object.keys(this._userConfig.rights).forEach(g => {
-            if (typeof this._userConfig.rights[g] == 'string' && this._userConfig.rights[g] == targetName) {
-                rights.push(g);
-            } else if (typeof this._userConfig.rights[g] != 'string' && this._userConfig.rights[g].find(n => n == targetName)) {
+            if (this._userConfig.rights[g].find(n => n == targetName)) {
                 rights.push(g);
             }
         });
         return rights.join(', ');
     }
 
-    public get userConfig(): any {
+    public get userConfig(): UserConfig {
         return this._userConfig;
     }
 

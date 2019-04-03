@@ -34,7 +34,7 @@ tmi.client.on('part', (channel: string, username: string, self: boolean): void =
 tmi.client.on('whisper', (from: string, user: any, message: string, self: boolean): void => {
     const userstate: Userstate = GlobalService.convertToInstance(user);
 
-    if (userstate.username === userConfigService.userConfig.rights.broadcaster) {
+    if (userConfigService.userConfig.rights.broadcaster.find(b => b == userstate.username)) {
         const messages: string[] = message.split(' ');
     	if (messages[0] === '!say') {
             messages.shift();
@@ -49,7 +49,7 @@ tmi.client.on('chat', (channel: string, user: any, message: string, self: boolea
 
     sentences.setDataToDefault(userstate, userConfigService.userConfig, raffle.getUserCoins(userstate.userId));
 
-    if (userConfigService.userConfig.rights.broadcaster == userstate.username
+    if (userConfigService.userConfig.rights.broadcaster.find(b => b == userstate.username)
         || userConfigService.userConfig.rights.mods.find(m => m == userstate.username)) {
         if (messages[0] === '!queue') {
             if (messages[1] === 'get') {

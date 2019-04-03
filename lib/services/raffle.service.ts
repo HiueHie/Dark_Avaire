@@ -1,8 +1,8 @@
-import { client } from '../../node_modules/tmi.js';
-import { Coin } from '../../lib/models/coins';
 import { FileService } from './file.service';
 import { Raffle } from '../models/raffle';
 import { SentenceService } from './sentence.service';
+import { Coin } from '../../lib/models/coins';
+import { client } from '../../node_modules/tmi.js';
 import { Userstate } from '../../lib/models/userstate';
 
 export class RaffelService {

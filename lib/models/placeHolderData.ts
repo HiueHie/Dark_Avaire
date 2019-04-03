@@ -1,7 +1,7 @@
-import { Core } from "./core";
-import { Raffle } from "./raffle";
-import { Rights } from "./rights";
-import { Song } from "./song";
+import { Core } from './core';
+import { Raffle } from './raffle';
+import { Rights } from './rights';
+import { Song } from './song';
 
 export class PlaceHolderData {
     public core: Core;

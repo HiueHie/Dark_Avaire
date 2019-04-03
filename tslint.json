@@ -12,6 +12,7 @@
         "eofline": true,
         "forin": true,
         "label-position": true,
+        "indent":false,
         "max-line-length": [true, 150],
         "member-access": false,
         "member-ordering": true,

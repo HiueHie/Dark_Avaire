@@ -7,7 +7,10 @@ import { Userstate } from '../models/userstate';
 
 export class SentenceService {
     private _userSentences: any;
-    private _placeHolders: string[] = ['username', 'pointsname', 'points', 'displayname'];
+    private _placeHoldersForCore: string[] = ['username', 'pointsname', 'points', 'displayname'];
+    private _placeHoldersForSong: string[] = ['songusername', 'songid', 'songlist', 'songtitle', 'nextsongtitle', 'nextsongusername'];
+    private _placeHoldersForRaffle: string[] = ['time', 'winusername', 'winuserdisplay', 'winpoints'];
+    private _placeHoldersForRights: string[] = ['targetusername', 'rightname', 'rightnames'];
     private _data: {[userId: number]: PlaceHolderData};
 
     constructor() {
@@ -16,14 +19,14 @@ export class SentenceService {
 
     public getSentence(service: string, method: string, answer = '', user: Userstate): string {
         let result = answer != '' ? this._userSentences[service][method][answer] : this._userSentences[service][method];
-        Object.keys([...this._placeHolders, this['_placeHoldersFor' + service[0].toUpperCase]])
+        Object.keys([...this._placeHoldersForCore, this['_placeHoldersFor' + service[0].toUpperCase]])
                 .forEach(k => result = result.replace('$' + k + '$', this._data[user.userId][service][k]));
         return result;
     }
 
     public getSentenceWithOwnProperties(service: string, method: string, answer = '', obj: object): string {
         let result = answer != '' ? this._userSentences[service][method][answer] : this._userSentences[service][method];
-        Object.keys([...this._placeHolders, this['_placeHoldersFor' + service[0].toUpperCase]])
+        Object.keys([...this._placeHoldersForCore, this['_placeHoldersFor' + service[0].toUpperCase]])
                 .forEach(k => result = result.replace('$' + k + '$', obj[k]));
         return result;
     }
@@ -47,21 +50,5 @@ export class SentenceService {
 
     public deleteData(user: Userstate): void {
         this._data[user.userId] = null;
-    }
-
-    private _placeHoldersForCore(): string[] {
-        return [];
-    }
-
-    private _placeHoldersForSong(): string[] {
-        return ['songusername', 'songid', 'songlist', 'songtitle', 'nextsongtitle', 'nextsongusername'];
-    }
-
-    private _placeHoldersForRaffle(): string[] {
-        return ['time', 'winusername', 'winuserdisplay', 'winpoints'];
-    }
-
-    private _placeHoldersForRights(): string[] {
-        return ['targetusername', 'rightname', 'rightnames'];
     }
 }

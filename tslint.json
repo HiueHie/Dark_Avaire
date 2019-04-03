@@ -11,7 +11,7 @@
         "curly": true,
         "eofline": true,
         "forin": true,
-        "indent": [true, "spaces"],
+        "indent": [true, "tabs"],
         "label-position": true,
         "max-line-length": [true, 150],
         "member-access": false,
@@ -37,7 +37,7 @@
         "quotemark": [true, "single" ],
         "radix": true,
         "semicolon": true,
-        "triple-equals": [true, "allow-null-check"],
+        "triple-equals": false,
         "typedef-whitespace": [true, {
                 "call-signature": "nospace",
                 "index-signature": "nospace",

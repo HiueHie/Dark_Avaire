@@ -1,3 +1,4 @@
+/* tslint:disable:max-classes-per-file */
 export class UserConfig {
     public channel_name: string;
     public rights: {[rightName: string]: string[]};

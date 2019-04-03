@@ -91,7 +91,7 @@ export class RaffelService {
      * @param {number} time
      */
     private _timeouts(client: client, time: number, user: Userstate): void {
-        this._sentenceService.setDataWithRaffle(user, new Raffle(time));
+        this._setUserRaffleData(user, time, "", "", 0);
         let t: number = time;
         if (t == 8) {
             t = 7;
@@ -134,8 +134,12 @@ export class RaffelService {
             this._increaseUserPoints(winUser.userId, winUser.username, points);
         }
         this._fielService.setFileContent(this._coins);
-        this._sentenceService.setDataWithRaffle(user, new Raffle(0, winUser.username, winUser.displayName, points));
+        this._setUserRaffleData(user, 0, winUser.username, winUser.displayName, points);
         client.action(client.opts.channels[0], this._sentenceService.getSentence("raffle", "specialraffle", "win", user))
         this._users = [];
+    }
+
+    private _setUserRaffleData(user: Userstate, time: number, winusername: string, winuserdisplay: string, winningpoints: number): void {
+        this._sentenceService.setDataWithRaffle(user, new Raffle(time, winusername, winuserdisplay, winningpoints));
     }
 }

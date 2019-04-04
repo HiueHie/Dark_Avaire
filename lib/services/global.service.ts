@@ -4,7 +4,7 @@ export class GlobalService {
     /**
      * @description Converts an invalide Userstate object to valide
      *
-     * @param jsonObj
+     * @param {any} jsonObj
      */
     public static convertToInstance(jsonObj: any): Userstate {
         return new Userstate(jsonObj);

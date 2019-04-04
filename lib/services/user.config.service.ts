@@ -15,10 +15,24 @@ export class UserConfigService {
         this._sentencesService = sentence;
     }
 
+    /**
+     * @description Gets the user config
+     *
+     * @returns {UserConfig}
+     */
     public get userConfig(): UserConfig {
         return this._userConfig;
     }
 
+    /**
+     * @description Add a right to a view
+     *
+     * @param {string} rightName
+     * @param {string} targetName
+     * @param {Userstate} user
+     *
+     * @returns {string}
+     */
     public addRight(rightName: string, targetName: string, user: Userstate): string {
         this._setUserRightsData(user, targetName, rightName);
         if (targetName == '' || targetName == null) {
@@ -38,6 +52,15 @@ export class UserConfigService {
         return this._sentencesService.getSentence('rights', 'add', 'success', user);
     }
 
+    /**
+     * @description Removes a right from a view
+     *
+     * @param {string} rightName
+     * @param {string} targetName
+     * @param {Userstate} user
+     *
+     * @returns {string}
+     */
     public removeRight(rightName: string, targetName: string, user: Userstate): string {
         this._setUserRightsData(user, targetName, rightName);
         if (targetName == '' || targetName == null) {
@@ -61,6 +84,14 @@ export class UserConfigService {
         return this._sentencesService.getSentence('rights', 'remove', 'wrong_username', user);
     }
 
+    /**
+     * @description Gets all rights from a user
+     *
+     * @param {Userstate} user
+     * @param {string} targetName
+     *
+     * @returns {string}
+     */
     public getRight(user: Userstate, targetName = ''): string {
         if (targetName != null && targetName != '') {
             this._setUserRightsData(user, targetName, '');
@@ -70,6 +101,13 @@ export class UserConfigService {
         return this._sentencesService.getSentence('rights', 'get', 'own', user);
     }
 
+    /**
+     * @description Search for all rights the user have
+     *
+     * @param {string} targetName
+     *
+     * @returns {string}
+     */
     private _getRight(targetName: string): string {
         const rights: string[] = [];
         Object.keys(this._userConfig.rights).forEach(g => {
@@ -80,6 +118,13 @@ export class UserConfigService {
         return rights.join(', ');
     }
 
+    /**
+     * @description Sets data for user interaction
+     *
+     * @param {Userstate} user
+     * @param {string} targetName
+     * @param {string} rightName
+     */
     private _setUserRightsData(user: Userstate, targetName: string, rightName: string): void {
         targetName = targetName != '' ? targetName : '';
         this._sentencesService.setDatawithRights(user, new Rights(targetName,

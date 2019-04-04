@@ -4,6 +4,7 @@ import { client } from '../../node_modules/tmi.js';
 import { Raffle } from '../models/raffle';
 import { FileService } from './file.service';
 import { SentenceService } from './sentence.service';
+import { UserConfig } from '../models/userConfig';
 
 export class RaffelService {
     private _coins: Coin[];
@@ -12,9 +13,9 @@ export class RaffelService {
     private _pointsToAll: boolean;
     private _fielService: FileService;
     private _sentenceService: SentenceService;
-    private _userConfig: any;
+    private _userConfig: UserConfig;
 
-    constructor(sentence: SentenceService, config: any) {
+    constructor(sentence: SentenceService, config: UserConfig) {
         this._started = false;
         this._users = [];
         this._pointsToAll = false;
@@ -139,6 +140,15 @@ export class RaffelService {
         }
     }
 
+    /**
+     * @description Sets data for user interaction
+     *
+     * @param {Userstate} user
+     * @param {number} time
+     * @param {string} winusername
+     * @param {string} winuserdisplay
+     * @param {number} winningpoints
+     */
     private _setUserRaffleData(user: Userstate, time: number, winusername: string, winuserdisplay: string, winningpoints: number): void {
         this._sentenceService.setDataWithRaffle(user, new Raffle(time, winusername, winuserdisplay, winningpoints));
     }

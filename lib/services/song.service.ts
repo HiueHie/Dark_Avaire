@@ -76,6 +76,8 @@ export class SongService {
      * @tutorial !queue remove <id>
      *
      * @param {any} id
+     * 
+     * @returns {string} answer
      */
     public removeSong(id: any, user: Userstate): string {
         this._setUserSongData(user, '', id);
@@ -114,6 +116,13 @@ export class SongService {
         this._songList.forEach((s: SongRequestObject, i: number): number => s.id = i + 1);
     }
 
+    /**
+     * @description Sets data for user interaction
+     *
+     * @param user
+     * @param songName
+     * @param songId
+     */
     private _setUserSongData(user: Userstate, songName: string, songId: any = false): void {
         songId = songId ? songId : !this._prioSub ? this._songList.length : (
             user.subscriber ? this._songList.findIndex(s => !s.isPrio) + 1 : this._songList.length );

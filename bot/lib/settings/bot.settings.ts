@@ -1,4 +1,4 @@
-import { client } from '../../node_modules/tmi.js';
+import { client } from '../../../node_modules/tmi.js';
 import { GeneralSettings } from './general.settings';
 
 export class Tmi {

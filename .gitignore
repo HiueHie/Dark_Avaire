@@ -2,16 +2,16 @@
 
 # compiled output
 /package-lock.json
-/bin/*.js
-/lib/models/*.js
-/lib/services/*.js
-/lib/settings/*.js
+/bot/bin/*.js
+/bot/lib/models/*.js
+/bot/lib/services/*.js
+/bot/lib/settings/*.js
 
 # dependencies
 /node_modules
 
 # database
-/coins_data.json
+/settings/coins_data.json
 
 # IDEs and editors
 /.idea

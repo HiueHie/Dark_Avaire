@@ -4,7 +4,6 @@ import { Raffle } from '../models/raffle';
 import { Rights } from '../models/rights';
 import { Song } from '../models/song';
 import { Userstate } from '../models/userstate';
-import { UserConfig } from '../models/userConfig';
 
 export class SentenceService {
     private _userSentences: any;
@@ -15,7 +14,7 @@ export class SentenceService {
     private _placeHoldersForRights: string[] = ['targetusername', 'rightname', 'rightnames'];
 
     constructor() {
-        this._userSentences = require('../../sentences.json');
+        this._userSentences = require('../../../settings/sentences.json');
     }
 
     /**

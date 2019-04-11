@@ -2,10 +2,10 @@
     "name": "Dark_Avaire",
     "version": "1.0.0",
     "description": "Chat bot for twitch",
-    "main": "bot.core.js",
+    "main": "bot/bin/bot.core.js",
     "scripts": {
         "build": "tsc",
-        "start": "node bin/bot.core.js"
+        "start": "node bot/bin/bot.core.js"
     },
     "repository": {
         "type": "git",

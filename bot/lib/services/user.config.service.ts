@@ -10,8 +10,8 @@ export class UserConfigService {
     private _sentencesService: SentenceService;
 
     constructor(sentence: SentenceService) {
-        this._fielService = new FileService('config.json');
-        this._userConfig = require('../../config.json');
+        this._fielService = new FileService('../../../settings/config.json');
+        this._userConfig = require('../../../settings/config.json');
         this._sentencesService = sentence;
     }
 

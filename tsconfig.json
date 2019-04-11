@@ -14,8 +14,8 @@
       ]
     },
     "include": [
-      "bin/*.ts",
-      "lib/**/*.ts"
+      "bot/bin/*.ts",
+      "bot/lib/**/*.ts"
     ]
   }
   

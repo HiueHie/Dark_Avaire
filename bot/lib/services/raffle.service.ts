@@ -1,6 +1,6 @@
 import { Coin } from '../../lib/models/coins';
 import { Userstate } from '../../lib/models/userstate';
-import { client } from '../../node_modules/tmi.js';
+import { client } from '../../../node_modules/tmi.js';
 import { Raffle } from '../models/raffle';
 import { FileService } from './file.service';
 import { SentenceService } from './sentence.service';
@@ -19,7 +19,7 @@ export class RaffelService {
         this._started = false;
         this._users = [];
         this._pointsToAll = false;
-        this._fielService = new FileService('coins_data.json');
+        this._fielService = new FileService('../../../settings/coins_data.json');
         this._coins = this._fielService.getFileContent();
         this._sentenceService = sentence;
         this._userConfig = config;
